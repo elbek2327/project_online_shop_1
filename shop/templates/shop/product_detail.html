@@ -1,0 +1,152 @@
+{% extends "shop/base/base.html" %}
+
+{% load static %}
+{% load price_filters %} #narx uchun
+{% load custom_filters %} #rating uchun
+
+
+{% load register_tags %}
+
+
+
+{% block title %}Product Details{% endblock %}
+
+{% block product_detail %}
+
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center" >
+            <div class="col-md-6">
+                <div class="image-frame">
+                    <img class="card-img-top mb-5 mb-md-0" src="{{ product.get_absolute_url }}" alt="{{ product.name }}"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="small mb-1">
+                    <h5><b>Quantity:
+                        {% if product.quantity == 1 or product.quantity == 5 %}
+                            <span style="color: red;">{{ product.quantity }}</span>
+                        {% else %}
+                            <span style="color: blue;">{{ product.quantity }}</span>
+                        {% endif %}
+                    </b></h5>
+                </div>
+
+                <h4  >{{ product.name }}</h4><hr>
+                <div class="fs-5 mb-5">
+                    {% if product.discount %}
+                        <span class="text-muted text-decoration-line-through">{{ product.price|format_price }} so'm</span><br>
+                        <b>{{ product.discounted_price|format_price }} so'm</b>
+                    {% else %}
+                        {{ product.price|format_price }} so'm
+                    {% endif %}
+                </div>
+                <p class="lead">
+                    {{ product.description | safe }}
+                  </p>
+
+                <!--Placing an order section-->
+                <div class="container mt-4">
+                <h3>Place an Order</h3>
+                    <form action="{% url 'product_placing' product.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success" style="background-color: #0dcaf0; color: black;">Place Order</button>
+                        <a href="{% url 'index' %}" class="btn btn-primary" style="background-color: gray;">Back to main menu</a>
+                    </form>
+
+
+                </div>
+                
+            </div>
+            <!--COmment section will be it-->
+        <hr style="color: lavenderblush">
+            <div style="background-color: aliceblue">
+                Comments: <b> {{ num_comments }} </b>
+                <br>
+                <hr>
+
+
+                {% if not product.comments.all %}
+                    <p>No comments added yet</p>
+                {% else %}
+
+                    {% for comment in product.comments.all %}
+
+                        <h3><strong>{{ comment.commenter_name }}</strong></h3>
+                        <!--Rating will be there-->
+                            <p style="color:gold; font-size:20px;">
+                        {{ comment.rating| star_rating }}
+                        </p>
+
+
+
+                        <p>{{ comment.comment }}</p>
+                        <p><small>{{ comment.created_at }}</small></p>
+
+                    {% endfor %}
+
+                {% endif %}
+                    <p><a class = "btn btn-primary" href="{% url 'add_comment' product.id %}" style="background-color: yellowgreen;">Add a comment</a></p>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Related products</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in related_products %}  <!-- Correct variable name -->
+                <div class="col mb-5">
+                    <div class="card h-100 shadow-sm">
+                        {% if product.discount %}
+                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                                Sale
+                            </div>
+                        {% endif %}
+                        <img class="card-img-top" src="{{ product.get_absolute_url }}" alt="{{ product.name }}">
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h6 class="fw-bolder">{{ product.name }}</h6>
+
+                                <!-- Display average rating -->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <p>Rating: {{ product.avg_rating|default:"No rating" }}/5</p>
+                                </div>
+
+                                <div class="mt-2">
+                                    {% if product.discount %}
+                                        <span class="text-muted text-decoration-line-through">
+                                            {{ product.price | format_price }} so'm
+                                        </span><br>
+                                        <strong class="text-danger">{{ product.discounted_price | format_price }} so'm</strong>
+                                    {% else %}
+                                        <strong>{{ product.price | format_price }} so'm</strong>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+        </div>
+    </section>
+
+
+
+
+
+{% endblock %}

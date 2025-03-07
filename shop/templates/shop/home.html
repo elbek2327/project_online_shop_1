@@ -1,0 +1,90 @@
+{% extends "shop/base/base.html" %}
+
+{% load static %}
+{% load register_tags %}
+{% load price_filters %}
+{% load custom_filters %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block homepage %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder" style="color: white">Online Shop</h1>
+            <h4 class="lead fw-normal text-white-50 mb-0" style="color: white">Welcome to my website.</h4>
+        </div>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Explore Products</h3>
+                    <div>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="#">Expensive</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="#">Cheap</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="#">Likes</a>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'product_create' %}" class="btn btn-success btn-sm ms-3">Add Product</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in products %}
+                <div class="col mb-5">
+                    <div class="card h-100 shadow-sm">
+                        {% if product.discount %}
+                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                                Sale
+                            </div>
+                        {% endif %}
+                        <img class="card-img-top" src="{{ product.get_absolute_url }}" alt="{{ product.name }}">
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h6 class="fw-bolder">{{ product.name }}</h6>
+
+
+                            <!--rating-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <p>Average Rating: {{ product.avg_rating|stars }} ({{ product.avg_rating }}/5)</p>
+                                </div>
+                                <div class="mt-2">
+                                    {% if product.discount %}
+                                        <span class="text-muted text-decoration-line-through">
+                                            {{ product.price|format_price }} so'm
+                                        </span><br>
+                                        <strong class="text-danger">{{ product.discounted_price|format_price }} so'm</strong>
+                                    {% else %}
+                                        <strong>{{ product.price|format_price }} so'm</strong>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View Product</a>
+                            </div>
+                            {% if user.is_superuser %}
+                                <div class="d-flex justify-content-around mt-3">
+                                    <a href="{% url 'product_update' product.id %}" class="btn btn-sm btn-primary">Update</a>
+                                    <a href="{% url 'product_delete' product.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}

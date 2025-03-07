@@ -1,0 +1,29 @@
+{% extends "shop/base/base.html" %}
+
+{% block title%}Adding comment{% endblock %}
+
+{% block add_comment %}
+<h1 style= " font-size: 40px; margin-left: 30px;" class="p-2">
+    Adding a comment
+</h1>
+
+<div class="container m-5"> 
+{#    <form action="" method="POST">#}
+{##}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <input type="submit" name="submit">#}
+{##}
+{#    #}
+{#    </form>#}
+<form method="POST">
+    {% csrf_token %}
+
+    <p><strong>Commenting as: {{ user.username }}</strong></p>
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
+{% endblock %}
