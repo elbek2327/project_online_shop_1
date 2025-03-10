@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
+    'adminsortable2',
+    'import_export'
+
+
 ]
 
 MIDDLEWARE = [
@@ -112,7 +117,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'shop/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, 'shop/static')
+ ]
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static')
@@ -125,3 +133,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'shop/media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# jazzmin setting will be there
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Online shop Admin", #title
+    "site_header": "Admin", #header
+    "site_brand":"Admin menu",
+    "copyright":"Everything is under control",#copyright
+    "topmenu_links" : [
+        {
+            "app":"shop", #top dagi category sifat narsa
+        }
+    ],
+    "show_sidebar": True,
+    "show_search": True,
+    "navigation_expanded": True,
+    # "language_chooser":True
+    "user_avatar": None,
+    "site_logo":None, #logo uchun hozircha yoq logo
+    "site_icon":"shop/images/logo.png", #site iconim
+    "welcome_sign":"Welcome to admin menu",
+    "search_model": ["auth.User"],
+    "show_ui_builder": True, #Ui builder added
+}
+
+

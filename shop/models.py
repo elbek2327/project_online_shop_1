@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 from django.db.models import Avg #aggregate avg ni oldim
 
 
+
 # Create your models here.
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    my_order = models.PositiveIntegerField(default=0,null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -59,6 +61,7 @@ class Product(BaseModel):
 
     class Meta:
         db_table = 'product'
+        ordering = ['my_order']
 
 
 
