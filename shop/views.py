@@ -11,16 +11,24 @@ from datetime import datetime
 def index(request, category_id: int | None = None):
     search_query = request.GET.get('q', '')
     categories = Category.objects.all()
+    filter_query = request.GET.get('filter', '')
+
     if category_id:
         products = Product.objects.filter(category_id=category_id)
     else:
-        products = Product.objects.all().order_by('-updated_at') 
-    
+        products = Product.objects.all().order_by('-updated_at')
+
     if search_query:
         products = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
 
-    
+    if filter_query=="expensive":
+        products = products.order_by('-price')
 
+    if filter_query=="cheap":
+        products = products.order_by('price')
+
+    if filter_query=="rating":
+        products = products.annotate(avg_rating=Avg('comments__rating')).order_by('-avg_rating')
 
 
 
