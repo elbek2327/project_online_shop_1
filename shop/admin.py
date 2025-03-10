@@ -9,9 +9,7 @@ from django.utils.html import format_html
 
 # admin.site.register(Product)
 # admin.site.register(Category)
-# admin.site.register(Order)
-#
-# admin.site.register(Comment)
+
 
 admin.site.unregister(Group)
 
@@ -42,3 +40,7 @@ class ProductModelAdmin(SortableAdminMixin, admin.ModelAdmin):
     def image_tag(self, obj):
         return format_html('<img src="{}" style="max-width: 50px; max-height:50px" /> '.format(obj.image.url))
     image_tag.short_description = 'Image'
+
+# admin.site.register(Order)
+#
+# admin.site.register(Comment)
