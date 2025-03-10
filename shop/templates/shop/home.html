@@ -24,9 +24,10 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h3>Explore Products</h3>
                     <div>
-                        <a class="btn btn-outline-secondary btn-sm me-2" href="#">Expensive</a>
-                        <a class="btn btn-outline-secondary btn-sm me-2" href="#">Cheap</a>
-                        <a class="btn btn-outline-secondary btn-sm" href="#">Likes</a>
+                    <!--Cheap expensive rating-->
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?filter=expensive">Expensive</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?filter=cheap">Cheap</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="?filter=rating">Rating</a>
                         {% if user.is_superuser %}
                             <a href="{% url 'product_create' %}" class="btn btn-success btn-sm ms-3">Add Product</a>
                         {% endif %}
@@ -72,7 +73,7 @@
                             </div>
                             {% if user.is_superuser %}
                                 <div class="d-flex justify-content-around mt-3">
-                                    <a href="{% url 'product_update' product.id %}" class="btn btn-sm btn-primary">Update</a>
+                                    <a href="{% url 'product_update' product.id %}" class="btn btn-sm btn-primary" style="background-color: green">Update</a>
                                     <a href="{% url 'product_delete' product.id %}" class="btn btn-sm btn-danger">Delete</a>
                                 </div>
                             {% endif %}

@@ -18,11 +18,21 @@ def index(request, category_id: int | None = None):
     
     if search_query:
         products = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
+
+    
+
+
+
+
     context = {
         'products': products,
         'categories': categories
     }
     return render(request, 'shop/home.html', context)
+
+
+
+
 
 
 def product_detail(request, product_id):
