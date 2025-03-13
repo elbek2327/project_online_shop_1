@@ -97,7 +97,7 @@ def product_create(request):
         if form.is_valid():
             form.save(commit=True)
 
-            return redirect('index')
+            return redirect('shop:index')
 
     context = {
         'form': form
@@ -116,7 +116,7 @@ def product_update(request,product_id):
         form = ProductModelForm(request.POST, request.FILES, instance = product)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('shop:index')
     context = {
     'form': form,
     'product': product
@@ -132,41 +132,12 @@ def product_delete(request, product_id):
     product = get_object_or_404(Product,id=product_id)
     if request.method == 'POST':
         product.delete()
-        return redirect('index')
+        return redirect('shop:index')
     return render(request, 'shop/product_delete.html', {'product': product})
 
 
 
 
-# @login_required
-# def product_placing(request, product_id):
-#     product = get_object_or_404(Product, id=product_id)
-#
-#     if request.method == 'POST':
-#         form = OrderForm(request.POST, product_id=product.id) #html da topishi uchun kk boldi
-#         if form.is_valid():
-#             order = form.save(commit=False)
-#             order.product = product
-#             order.user = request.user
-#
-#             if order.quantity > product.quantity:
-#                 form.add_error('quantity', 'Not enough stock available')
-#             else:
-#                 product.quantity -= order.quantity
-#                 product.save()
-#                 order.is_placed = True
-#                 order.save()
-#                 return redirect('index')
-#
-#     else:
-#         form = OrderForm(product_id = product.id)  # empty form bo
-#     context={
-#         'product': product,
-#         'form': form
-#     }
-#     return render(request, 'shop/product_detail.html', context)
-
-# print(form.errors)
 def product_placing(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -218,7 +189,7 @@ def add_comment(request, pk):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            name = request.user.username
+            name = form.cleaned_data['commenter_name']
             body = form.cleaned_data['comment']  
             rating = int(form.cleaned_data['rating'])
             c = Comment(product=product, commenter_name=name, comment=body, rating=rating, date_added=datetime.now())
@@ -228,7 +199,7 @@ def add_comment(request, pk):
                 product.rating = sum(all_ratings) // len(all_ratings) #ortchasini olishga jami komment / mavjud comment
                 product.save()
 
-            return redirect('product_detail', product_id=pk)  
+            return redirect('shop:product_detail', product_id=pk)
     else:
         form = CommentForm()
 

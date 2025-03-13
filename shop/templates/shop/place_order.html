@@ -19,15 +19,15 @@
     </div>
 </div>
 
-    <form action="{% url 'product_placing' product.id %}" method="POST">
+    <form action="{% url 'shop:product_placing' product.id %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
             {{ form.as_p }}  <!-- Automatically renders all form fields -->
         </div>
 
         <button type="submit" class="btn btn-primary">Confirm Order</button>
-        <a href="{% url 'product_detail' product.id %}" class="btn btn-danger">Cancel</a>
-        <a href="{% url 'index' %}" class="btn btn-primary" style="background-color: green;">Back to main menu</a>
+        <a href="{% url 'shop:product_detail' product.id %}" class="btn btn-danger">Cancel</a>
+        <a href="{% url 'shop:index' %}" class="btn btn-primary" style="background-color: green;">Back to main menu</a>
     </form>
 </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
-from django.contrib.auth.models import User
+from django.conf import settings
+
 from django.db.models import Avg #aggregate avg ni oldim
 
 
@@ -38,7 +39,7 @@ class Product(BaseModel):
     discount = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
-
+    rating = models.FloatField(null=True, blank=True)
     @property
     def discounted_price(self):
         if self.discount > 0:
@@ -71,7 +72,7 @@ class Product(BaseModel):
 # order name, quantity, who is ordering, foreign key
 class Order(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE) #qaysi productni aynan
-    user = models.ForeignKey(User, on_delete=models.CASCADE) #kim placed qildi
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  #kim placed qildi
     name = models.CharField(max_length=45)
     surname = models.CharField(max_length=55)
     phone = models.CharField(max_length=14)

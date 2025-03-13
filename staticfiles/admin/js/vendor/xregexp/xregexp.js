@@ -3476,14 +3476,14 @@ module.exports = {
 };
 
 },{}],86:[function(require,module,exports){
-var userAgent = require('../internals/engine-user-agent');
+var userAgent = require('../internals/engine-users-agent');
 
 var firefox = userAgent.match(/firefox\/(\d+)/i);
 
 module.exports = !!firefox && +firefox[1];
 
 },{"../internals/engine-user-agent":88}],87:[function(require,module,exports){
-var UA = require('../internals/engine-user-agent');
+var UA = require('../internals/engine-users-agent');
 
 module.exports = /MSIE|Trident/.test(UA);
 
@@ -3494,7 +3494,7 @@ module.exports = getBuiltIn('navigator', 'userAgent') || '';
 
 },{"../internals/get-built-in":100}],89:[function(require,module,exports){
 var global = require('../internals/global');
-var userAgent = require('../internals/engine-user-agent');
+var userAgent = require('../internals/engine-users-agent');
 
 var process = global.process;
 var Deno = global.Deno;
@@ -3522,7 +3522,7 @@ if (!version && userAgent) {
 module.exports = version;
 
 },{"../internals/engine-user-agent":88,"../internals/global":104}],90:[function(require,module,exports){
-var userAgent = require('../internals/engine-user-agent');
+var userAgent = require('../internals/engine-users-agent');
 
 var webkit = userAgent.match(/AppleWebKit\/(\d+)\./);
 

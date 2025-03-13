@@ -49,11 +49,11 @@
                 <!--Placing an order section-->
                 <div class="container mt-4">
                 <h3>Place an Order</h3>
-                    <form action="{% url 'product_placing' product.id %}" method="POST">
+                    <form action="{% url 'shop:product_placing' product.id %}" method="POST">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success" style="background-color: #0dcaf0; color: black;">Place Order</button>
-                        <a href="{% url 'index' %}" class="btn btn-primary" style="background-color: gray;">Back to main menu</a>
+                        <a href="{% url 'shop:index' %}" class="btn btn-primary" style="background-color: gray;">Back to main menu</a>
                     </form>
 
 
@@ -88,7 +88,7 @@
                     {% endfor %}
 
                 {% endif %}
-                    <p><a class = "btn btn-primary" href="{% url 'add_comment' product.id %}" style="background-color: yellowgreen;">Add a comment</a></p>
+                    <p><a class = "btn btn-primary" href="{% url 'shop:add_comment' product.id %}" style="background-color: yellowgreen;">Add a comment</a></p>
 
 
             </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                                <a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View Product</a>
+                                <a class="btn btn-outline-dark mt-auto" href="{% url 'shop:product_detail' product.id %}">View Product</a>
                             </div>
                         </div>
                     </div>
