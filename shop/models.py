@@ -36,7 +36,7 @@ class Product(BaseModel):
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=14, decimal_places=2)
     image = models.ImageField(upload_to='images/', null=True, blank=True, default='images/no_image.png')
-    discount = models.PositiveIntegerField(default=0)
+    discount = models.PositiveIntegerField(default=0, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)

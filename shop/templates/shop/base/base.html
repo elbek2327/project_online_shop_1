@@ -32,66 +32,58 @@
 </head>
 <body>
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{% url 'shop:index' %}">Start Bootstrap</a>
+        <a class="navbar-brand fw-bold text-primary" href="{% url 'shop:index' %}">Start Bootstrap</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left Side (Navigation Links) -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href={% url 'shop:index' %}>Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'shop:index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
 
-                <!--Categories-->
+                <!-- Categories Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href={% url 'shop:index'%} role="button"
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{% url 'shop:index' %}">All Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-
+                        <li><hr class="dropdown-divider"/></li>
                         {% for category in categories %}
                             <li><a class="dropdown-item"
                                    href="{% url 'shop:products_of_category' category.id %}">{{ category.title }}</a></li>
                         {% endfor %}
-
                     </ul>
                 </li>
             </ul>
 
-
-            <!--Search button-->
-            <form class="d-flex">
-                <input type="text" name = "q" class="form-contro">
+            <!-- Search Bar -->
+            <form class="d-flex me-3">
+                <input type="text" name="q" class="form-control me-2" placeholder="Search...">
                 <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-search-fill me-1"></i>
-                    Search
-
+                    <i class="bi-search"></i>
                 </button>
             </form>
 
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'users:logout_page' %}">
-                    {% csrf_token %}
-                    <div class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-
-                        <button type="submit" class="btn btn-danger">Logout</button>
-
-                    </div>
-                    {{ user.email }}
-                </form>
-
-            {% else %}
-
-                <div class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <!-- Login/Logout Section -->
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'users:logout_page' %}">
+                        {% csrf_token %}
+                        <div class="d-flex align-items-center">
+                            <span class="text-primary fw-bold me-3">{{ user.email }}</span>
+                            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                        </div>
+                    </form>
+                {% else %}
                     <a href="{% url 'users:login_page' %}">
-                        <button type="button" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-primary btn-sm">Login</button>
                     </a>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </nav>
