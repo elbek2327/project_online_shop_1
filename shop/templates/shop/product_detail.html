@@ -36,10 +36,10 @@
                 <h4  >{{ product.name }}</h4><hr>
                 <div class="fs-5 mb-5">
                     {% if product.discount %}
-                        <span class="text-muted text-decoration-line-through">{{ product.price|format_price }} so'm</span><br>
+                        <span class="text-muted text-decoration-line-through"><b>{{ product.price|format_price }} so'm</b></span><br>
                         <b>{{ product.discounted_price|format_price }} so'm</b>
                     {% else %}
-                        {{ product.price|format_price }} so'm
+                        <b>{{ product.price|format_price }} so'm</b>
                     {% endif %}
                 </div>
                 <p class="lead">
@@ -108,7 +108,9 @@
                                 Sale
                             </div>
                         {% endif %}
-                        <img class="card-img-top" src="{{ product.get_absolute_url }}" alt="{{ product.name }}">
+                        <div class="d-flex justify-content-center align-items-center" style="padding:10px; border: 1px solid #ddd">
+                        <img class="card-img-top" src="{{ product.get_absolute_url }}" alt="{{ product.name }}" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                        </div>
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <h6 class="fw-bolder">{{ product.name }}</h6>
@@ -121,11 +123,11 @@
                                 <div class="mt-2">
                                     {% if product.discount %}
                                         <span class="text-muted text-decoration-line-through">
-                                            {{ product.price | format_price }} so'm
+                                            <b>{{ product.price | format_price }} so'm </b>
                                         </span><br>
                                         <strong class="text-danger">{{ product.discounted_price | format_price }} so'm</strong>
                                     {% else %}
-                                        <strong>{{ product.price | format_price }} so'm</strong>
+                                        <strong><b>{{ product.price | format_price }} so'm </b></strong>
                                     {% endif %}
                                 </div>
                             </div>
