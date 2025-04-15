@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-4a7_nywq3@=#l65p8kf)r*=83qgqsl8yj077^d#nbcj3%sj%8t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -164,5 +164,13 @@ JAZZMIN_SETTINGS = {
     "search_model": ["auth.User"],
     "show_ui_builder": True, #Ui builder added
 }
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "zubaydullayev1609@gmail.com"
+EMAIL_HOST_PASSWORD = "amql budr hjck kfjh"
 
 

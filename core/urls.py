@@ -1,4 +1,4 @@
-from tkinter.font import names
+
 
 from django.contrib import admin
 from django.urls import path, include
@@ -10,3 +10,5 @@ urlpatterns = [
                   path('shop/', include('shop.urls'), name='shop'),
                   path('users/', include('users.urls'), name='users'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
